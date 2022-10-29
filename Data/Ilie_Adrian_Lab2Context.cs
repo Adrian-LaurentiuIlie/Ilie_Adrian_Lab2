@@ -17,5 +17,7 @@ namespace Ilie_Adrian_Lab2.Data
         public DbSet<Ilie_Adrian_Lab2.Models.Book> Book { get; set; } = default!;
 
         public DbSet<Ilie_Adrian_Lab2.Models.Publisher> Publisher { get; set; }
+
+        public DbSet<Ilie_Adrian_Lab2.Models.Author> Author { get; set; }
     }
 }
