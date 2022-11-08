@@ -39,15 +39,9 @@ namespace Ilie_Adrian_Lab2.Pages.Books
             }
             //apelam PopulateAssignedCategoryData pentru o obtine informatiile necesare checkbox-
             //urilor folosind clasa AssignedCategoryData 
-        PopulateAssignedCategoryData(_context, Book);
-            var authorList = _context.Author.Select(x => new
-            {
-                x.ID,
-                FullName = x.LastName + " " + x.FirstName
-            });
-            ViewData["AuthorID"] = new SelectList(authorList, "ID", "FullName");
-            ViewData["PublisherID"] = new SelectList(_context.Publisher, "ID",
-           "PublisherName");
+            PopulateAssignedCategoryData(_context, Book);
+            ViewData["AuthorID"] = new SelectList(_context.Author, "ID", "FullName");
+            ViewData["PublisherID"] = new SelectList(_context.Publisher, "ID", "PublisherName");
             return Page();
         }
 
@@ -59,6 +53,7 @@ namespace Ilie_Adrian_Lab2.Pages.Books
             }
             var bookToUpdate = await _context.Book
                 .Include(i => i.Publisher)
+                .Include(i => i.Author)
                 .Include(i => i.BookCategories)
                     .ThenInclude(i => i.Category)
                 .FirstOrDefaultAsync(s => s.ID == id);

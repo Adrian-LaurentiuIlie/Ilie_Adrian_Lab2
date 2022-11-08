@@ -23,7 +23,8 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Author) {
+        @foreach (var item in Model.Author) 
+        {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.FirstName)
