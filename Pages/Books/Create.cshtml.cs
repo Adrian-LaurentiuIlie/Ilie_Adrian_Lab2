@@ -8,9 +8,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Ilie_Adrian_Lab2.Data;
 using Ilie_Adrian_Lab2.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace Ilie_Adrian_Lab2.Pages.Books
 {
+    [Authorize(Roles = "Admin")]
     public class CreateModel : BookCategoriesPageModel
     {
         private readonly Ilie_Adrian_Lab2.Data.Ilie_Adrian_Lab2Context _context;

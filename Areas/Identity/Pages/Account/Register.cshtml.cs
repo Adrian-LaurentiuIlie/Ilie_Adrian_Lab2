@@ -118,25 +118,24 @@ namespace Ilie_Adrian_Lab2.Areas.Identity.Pages.Account
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl ??= Url.Content("~/");
-            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            ExternalLogins = (await
+           _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
             var user = CreateUser();
-
             await _userStore.SetUserNameAsync(user, Input.Email,
            CancellationToken.None);
             await _emailStore.SetEmailAsync(user, Input.Email,
            CancellationToken.None);
             var result = await _userManager.CreateAsync(user,
            Input.Password);
-
             Member.Email = Input.Email;
             _context.Member.Add(Member);
             await _context.SaveChangesAsync();
-            
             if (result.Succeeded)
             {
                 _logger.LogInformation("User created a new account with password.");
-               
+                
+                var role = await _userManager.AddToRoleAsync(user, "User");
                 var userId = await _userManager.GetUserIdAsync(user);
                 var code = await
                _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -157,7 +156,8 @@ namespace Ilie_Adrian_Lab2.Areas.Identity.Pages.Account
                
                 $"Please confirm your account by <a href = '{HtmlEncoder.Default.Encode(callbackUrl)}' > clicking here </ a >.");
            
-            if (_userManager.Options.SignIn.RequireConfirmedAccount)
+                if
+                (_userManager.Options.SignIn.RequireConfirmedAccount)
                 {
                     return RedirectToPage("RegisterConfirmation", new
                     {
@@ -179,7 +179,6 @@ namespace Ilie_Adrian_Lab2.Areas.Identity.Pages.Account
             }
             return Page();
         }
-
 
         private IdentityUser CreateUser()
         {
